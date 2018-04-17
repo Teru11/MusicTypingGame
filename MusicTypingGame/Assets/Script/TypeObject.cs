@@ -7,13 +7,17 @@ public class TypeObject : MonoBehaviour {
     public TextMesh stringTextMesh;
     public TextMesh alphabetTextMesh;
     TypingSystem ts;
-    public string String;
+    TypingTime typingTime;
+    public Dictionary dictionary;
 
+    [System.NonSerialized]
+    public bool compulsionEnd = false;
     void Start()
     {
         
         ts = new TypingSystem();
-        ts.SetInputString(String);
+        typingTime = FindObjectOfType<TypingTime>();
+        ts.SetInputString(dictionary.GetRandomWord());
         UpdateText();
     }
 
@@ -22,6 +26,9 @@ public class TypeObject : MonoBehaviour {
         string[] keys = { "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k",
                           "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v",
                           "w", "x", "y", "z", "-", };
+
+   
+
         foreach (string key in keys)
         {
             if (Input.GetKeyDown(key))
@@ -33,6 +40,16 @@ public class TypeObject : MonoBehaviour {
                 break;
             }
         }
+
+        if (ts.isEnded() || compulsionEnd)
+        {
+            dictionary.i++;
+            ts.SetInputString(dictionary.GetRandomWord());
+            UpdateText();
+            typingTime.SliderUpdate();
+            compulsionEnd = false;
+        }
+
     }
 
     void UpdateText()

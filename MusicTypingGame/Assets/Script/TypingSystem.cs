@@ -1000,6 +1000,12 @@ public class TypingSystem : MonoBehaviour {
             case "ー":
                 tips.Add(new PatternTip("-"));
                 break;
+            case "M":
+                tips.Add(new PatternTip("m"));
+                break;
+            case "C":
+                tips.Add(new PatternTip("c"));
+                break;
             default:
                 if (s[0] == 'っ')
                 {
